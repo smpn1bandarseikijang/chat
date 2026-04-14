@@ -104,12 +104,17 @@
         .message-wrapper { display: flex; flex-direction: column; }
         .message {
             max-width: 75%; padding: 10px 14px; border-radius: 16px; font-size: 0.95rem; line-height: 1.4;
-            animation: fadeIn 0.3s ease; position: relative; transition: margin 0.3s ease;
+            animation: fadeIn 0.3s ease; position: relative; transition: all 0.3s ease;
         }
         .message.own { align-self: flex-end; background: #4facfe; color: white; border-bottom-right-radius: 4px; }
         .message.other { align-self: flex-start; background: #ffffff; color: #333; border-bottom-left-radius: 4px; box-shadow: 0 1px 2px rgba(0,0,0,0.1); }
         .message.admin-msg { background: #ffd700; color: #000; font-weight: 500; border: 2px solid #f39c12; }
         
+        /* State Balon Chat Dinilai (Scored) */
+        .message.scored { background: #2980b9 !important; color: white !important; box-shadow: 0 4px 10px rgba(41, 128, 185, 0.3); }
+        .message.scored .sender-name { color: #81ecec !important; }
+        .message.scored .meta { color: #dfe6e9 !important; }
+
         .message .meta { font-size: 0.7rem; opacity: 0.7; margin-top: 4px; display: block; }
         .message .sender-name { font-weight: bold; font-size: 0.85rem; color: #2c3e50; margin-bottom: 3px; display: block; }
         .message.own .sender-name { color: #e0f7fa; }
@@ -282,8 +287,9 @@
 
     <!-- JAVASCRIPT -->
     <script type="module">
+        // Import update dan onChildChanged untuk pembaruan UI secara realtime
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getDatabase, ref, push, onChildAdded, onValue, serverTimestamp, remove, get, set } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+        import { getDatabase, ref, push, onChildAdded, onChildChanged, onValue, serverTimestamp, remove, get, set, update } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
         import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged, signInAnonymously } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
         const firebaseConfig = {
@@ -307,6 +313,7 @@
 
         // Variabel penampung pendengar (listener) agar bisa dimatikan dan mencegah chat ganda
         let unsubscribeMessages = null;
+        let unsubscribeMessagesChanged = null;
         let unsubscribeUsers = null;
 
         // DOM Elements
@@ -514,13 +521,31 @@
         function setupRoomListeners() {
             // BERSIHKAN LISTENER LAMA JIKA ADA (Mencegah Bug Chat Ganda)
             if (unsubscribeMessages) { unsubscribeMessages(); unsubscribeMessages = null; }
+            if (unsubscribeMessagesChanged) { unsubscribeMessagesChanged(); unsubscribeMessagesChanged = null; }
             if (unsubscribeUsers) { unsubscribeUsers(); unsubscribeUsers = null; }
 
             messagesContainer.innerHTML = '';
             
             const messagesRef = ref(db, `rooms/${currentRoomToken}/messages`);
-            unsubscribeMessages = onChildAdded(messagesRef, (snapshot) => renderMessage(snapshot.val()));
+            
+            // 1. Dengar saat ada pesan baru
+            unsubscribeMessages = onChildAdded(messagesRef, (snapshot) => renderMessage(snapshot.val(), snapshot.key));
+            
+            // 2. Dengar saat ada pesan yang diubah (saat pesan mendapat label 'dinilai')
+            unsubscribeMessagesChanged = onChildChanged(messagesRef, (snapshot) => {
+                const data = snapshot.val();
+                const key = snapshot.key;
+                const msgEl = document.getElementById('msg-' + key);
+                
+                if (msgEl && data.scored) {
+                    msgEl.classList.add('scored');
+                    msgEl.classList.remove('has-admin-actions');
+                    // Hapus tombol +1 dan -1 jika ada
+                    msgEl.querySelectorAll('.give-point-btn, .minus-point-btn').forEach(btn => btn.remove());
+                }
+            });
 
+            // 3. Dengar pembaruan user (Klasemen/Poin)
             const usersRef = ref(db, `rooms/${currentRoomToken}/users`);
             unsubscribeUsers = onValue(usersRef, (snapshot) => {
                 let studentData = [];
@@ -694,7 +719,7 @@
             }
         };
 
-        function renderMessage(data) {
+        function renderMessage(data, messageKey) {
             const isOwn = data.username === currentUserName;
             
             const messageWrapper = document.createElement('div');
@@ -703,6 +728,12 @@
 
             const messageEl = document.createElement('div');
             messageEl.classList.add('message', isOwn ? 'own' : 'other');
+            if (messageKey) messageEl.id = 'msg-' + messageKey; // Pasang ID unik ke pesan
+            
+            // Tambahkan background biru langsung jika riwayat lama membuktikan pesan sudah dinilai
+            if (data.scored) {
+                messageEl.classList.add('scored');
+            }
             
             // JIKA PESAN DARI GURU
             if(data.isAdmin) {
@@ -736,7 +767,8 @@
                 messageInput.placeholder = "Menunggu soal berikutnya...";
             }
 
-            if (currentUserRole === 'admin' && !isOwn && !data.isAdmin) {
+            // Pasang tombol nilai hanya jika pesan tersebut BELUM dinilai (!data.scored)
+            if (currentUserRole === 'admin' && !isOwn && !data.isAdmin && !data.scored) {
                 messageEl.classList.add('has-admin-actions');
 
                 // Tombol +1
@@ -749,7 +781,9 @@
                         const scoreRef = ref(db, `rooms/${currentRoomToken}/users/${data.username}/score`);
                         const snap = await get(scoreRef);
                         await set(scoreRef, (snap.exists() ? snap.val() : 0) + 1);
-                        setTimeout(() => { plusBtn.innerText = "+1"; plusBtn.style.background = "#2ecc71"; plusBtn.disabled = false; }, 1000);
+                        
+                        // Perbarui status pesan menjadi "dinilai" di database agar jadi biru
+                        await update(ref(db, `rooms/${currentRoomToken}/messages/${messageKey}`), { scored: true });
                     } catch(e) {}
                 };
 
@@ -763,7 +797,9 @@
                         const scoreRef = ref(db, `rooms/${currentRoomToken}/users/${data.username}/score`);
                         const snap = await get(scoreRef);
                         await set(scoreRef, (snap.exists() ? snap.val() : 0) - 1);
-                        setTimeout(() => { minusBtn.innerText = "-1"; minusBtn.style.background = "#e74c3c"; minusBtn.disabled = false; }, 1000);
+                        
+                        // Perbarui status pesan menjadi "dinilai" di database agar jadi biru
+                        await update(ref(db, `rooms/${currentRoomToken}/messages/${messageKey}`), { scored: true });
                     } catch(e) {}
                 };
 
