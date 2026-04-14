@@ -110,10 +110,14 @@
         .message.other { align-self: flex-start; background: #ffffff; color: #333; border-bottom-left-radius: 4px; box-shadow: 0 1px 2px rgba(0,0,0,0.1); }
         .message.admin-msg { background: #ffd700; color: #000; font-weight: 500; border: 2px solid #f39c12; }
         
-        /* State Balon Chat Dinilai (Scored) */
-        .message.scored { background: #2980b9 !important; color: white !important; box-shadow: 0 4px 10px rgba(41, 128, 185, 0.3); }
-        .message.scored .sender-name { color: #81ecec !important; }
-        .message.scored .meta { color: #dfe6e9 !important; }
+        /* State Balon Chat Dinilai (Scored Plus/Minus) */
+        .message.scored-plus { background: #2ecc71 !important; color: white !important; box-shadow: 0 4px 10px rgba(46, 204, 113, 0.3); }
+        .message.scored-plus .sender-name { color: #e0f7fa !important; }
+        .message.scored-plus .meta { color: #f1f2f6 !important; }
+
+        .message.scored-minus { background: #e74c3c !important; color: white !important; box-shadow: 0 4px 10px rgba(231, 76, 60, 0.3); }
+        .message.scored-minus .sender-name { color: #fad390 !important; }
+        .message.scored-minus .meta { color: #f1f2f6 !important; }
 
         .message .meta { font-size: 0.7rem; opacity: 0.7; margin-top: 4px; display: block; }
         .message .sender-name { font-weight: bold; font-size: 0.85rem; color: #2c3e50; margin-bottom: 3px; display: block; }
@@ -538,7 +542,11 @@
                 const msgEl = document.getElementById('msg-' + key);
                 
                 if (msgEl && data.scored) {
-                    msgEl.classList.add('scored');
+                    if (data.scored === 'minus') {
+                        msgEl.classList.add('scored-minus');
+                    } else {
+                        msgEl.classList.add('scored-plus');
+                    }
                     msgEl.classList.remove('has-admin-actions');
                     // Hapus tombol +1 dan -1 jika ada
                     msgEl.querySelectorAll('.give-point-btn, .minus-point-btn').forEach(btn => btn.remove());
@@ -730,9 +738,11 @@
             messageEl.classList.add('message', isOwn ? 'own' : 'other');
             if (messageKey) messageEl.id = 'msg-' + messageKey; // Pasang ID unik ke pesan
             
-            // Tambahkan background biru langsung jika riwayat lama membuktikan pesan sudah dinilai
-            if (data.scored) {
-                messageEl.classList.add('scored');
+            // Tambahkan background warna langsung jika riwayat lama membuktikan pesan sudah dinilai
+            if (data.scored === 'minus') {
+                messageEl.classList.add('scored-minus');
+            } else if (data.scored) {
+                messageEl.classList.add('scored-plus');
             }
             
             // JIKA PESAN DARI GURU
@@ -782,8 +792,8 @@
                         const snap = await get(scoreRef);
                         await set(scoreRef, (snap.exists() ? snap.val() : 0) + 1);
                         
-                        // Perbarui status pesan menjadi "dinilai" di database agar jadi biru
-                        await update(ref(db, `rooms/${currentRoomToken}/messages/${messageKey}`), { scored: true });
+                        // Perbarui status pesan menjadi "dinilai" di database agar jadi hijau (+1)
+                        await update(ref(db, `rooms/${currentRoomToken}/messages/${messageKey}`), { scored: 'plus' });
                     } catch(e) {}
                 };
 
@@ -798,8 +808,8 @@
                         const snap = await get(scoreRef);
                         await set(scoreRef, (snap.exists() ? snap.val() : 0) - 1);
                         
-                        // Perbarui status pesan menjadi "dinilai" di database agar jadi biru
-                        await update(ref(db, `rooms/${currentRoomToken}/messages/${messageKey}`), { scored: true });
+                        // Perbarui status pesan menjadi "dinilai" di database agar jadi merah (-1)
+                        await update(ref(db, `rooms/${currentRoomToken}/messages/${messageKey}`), { scored: 'minus' });
                     } catch(e) {}
                 };
 
