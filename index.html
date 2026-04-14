@@ -128,6 +128,11 @@
         .chat-form { padding: 12px 15px; background: white; border-top: 1px solid #eee; display: flex; gap: 8px; }
         .chat-form input { flex: 1; padding: 12px 16px; border: 2px solid #e9ecef; border-radius: 24px; font-size: 1rem; outline: none; transition: border-color 0.3s; }
         .chat-form input:focus { border-color: #4facfe; }
+        
+        /* State Terkunci (Disabled) untuk Form Siswa */
+        .chat-form input:disabled { background-color: #e9ecef; cursor: not-allowed; }
+        .chat-form button:disabled { background-color: #95a5a6; cursor: not-allowed; }
+        .chat-form button:disabled:hover { background-color: #95a5a6; }
 
         /* =========================================
            ADMIN DASHBOARD STYLES
@@ -335,6 +340,7 @@
         const messagesContainer = document.getElementById('messages');
         const chatForm = document.getElementById('chat-form');
         const messageInput = document.getElementById('message-input');
+        const chatSubmitBtn = chatForm.querySelector('button'); // Ambil tombol kirim
 
         const scoreTableBody = document.getElementById('scoreTableBody');
         const copyScoresBtn = document.getElementById('copyScoresBtn');
@@ -668,6 +674,9 @@
 
         chatForm.onsubmit = async (e) => {
             e.preventDefault();
+            // Safeguard: Jangan proses jika sedang terkunci
+            if (currentUserRole === 'student' && messageInput.disabled) return; 
+
             const text = messageInput.value.trim();
             if (!text) return;
 
@@ -679,7 +688,7 @@
                     isAdmin: currentUserRole === 'admin'
                 });
                 messageInput.value = '';
-                if(window.innerWidth > 768) { messageInput.focus(); }
+                if(window.innerWidth > 768 && !messageInput.disabled) { messageInput.focus(); }
             } catch (error) {
                 alert('Gagal mengirim pesan: ' + error.message);
             }
@@ -695,12 +704,20 @@
             const messageEl = document.createElement('div');
             messageEl.classList.add('message', isOwn ? 'own' : 'other');
             
+            // JIKA PESAN DARI GURU
             if(data.isAdmin) {
                 messageEl.classList.add('admin-msg');
                 document.querySelectorAll('.has-admin-actions').forEach(el => {
                     el.classList.remove('has-admin-actions');
                     el.querySelectorAll('.give-point-btn, .minus-point-btn').forEach(btn => btn.remove());
                 });
+
+                // Membuka Kunci Kotak Input Siswa kembali
+                if (currentUserRole === 'student') {
+                    messageInput.disabled = false;
+                    chatSubmitBtn.disabled = false;
+                    messageInput.placeholder = "Ketik jawaban...";
+                }
             }
 
             const safeName = escapeHtml(data.username);
@@ -711,6 +728,13 @@
                 <span>${safeText}</span>
                 <span class="meta">${formatTime(data.timestamp)}</span>
             `;
+
+            // Jika Siswa baru saja mengirim jawabannya sendiri, maka kita Kunci Formnya
+            if (isOwn && !data.isAdmin && currentUserRole === 'student') {
+                messageInput.disabled = true;
+                chatSubmitBtn.disabled = true;
+                messageInput.placeholder = "Menunggu soal berikutnya...";
+            }
 
             if (currentUserRole === 'admin' && !isOwn && !data.isAdmin) {
                 messageEl.classList.add('has-admin-actions');
