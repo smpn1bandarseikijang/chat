@@ -12,505 +12,149 @@
         /* =========================================
            GLOBAL STYLES
            ========================================= */
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
+        * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-            min-height: 100dvh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
+            min-height: 100dvh; 
+            display: flex; justify-content: center; align-items: center; padding: 20px;
         }
-
-        .hidden {
-            display: none !important;
-        }
-
-        .view-section {
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
+        .hidden { display: none !important; }
+        .view-section { width: 100%; display: flex; justify-content: center; align-items: center; }
+        
         /* Tambahan untuk tata letak halaman entry agar footer ada di bawah form */
-        #view-entry {
-            flex-direction: column;
-        }
-
-        .btn {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 8px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        .btn-primary {
-            background: #667eea;
-            color: white;
-        }
-
-        .btn-primary:hover {
-            background: #5568d3;
-        }
-
-        .btn-success {
-            background: #2ecc71;
-            color: white;
-        }
-
-        .btn-success:hover {
-            background: #27ae60;
-        }
-
-        .btn-danger {
-            background: #e74c3c;
-            color: white;
-        }
-
-        .btn-danger:hover {
-            background: #c0392b;
-        }
-
-        .btn-secondary {
-            background: #95a5a6;
-            color: white;
-        }
-
+        #view-entry { flex-direction: column; }
+        
+        .btn { padding: 10px 20px; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; transition: 0.3s; }
+        .btn-primary { background: #667eea; color: white; }
+        .btn-primary:hover { background: #5568d3; }
+        .btn-success { background: #2ecc71; color: white; }
+        .btn-success:hover { background: #27ae60; }
+        .btn-danger { background: #e74c3c; color: white; }
+        .btn-danger:hover { background: #c0392b; }
+        .btn-secondary { background: #95a5a6; color: white; }
+        
         /* =========================================
            MODALS (Konfirmasi & Pengaturan Token)
            ========================================= */
         .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100dvh;
-            background: rgba(0, 0, 0, 0.5);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            backdrop-filter: blur(3px);
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100dvh;
+            background: rgba(0,0,0,0.5); display: flex; justify-content: center; align-items: center;
+            z-index: 9999; backdrop-filter: blur(3px);
         }
-
         .modal-box {
-            background: white;
-            padding: 25px;
-            border-radius: 16px;
-            max-width: 320px;
-            width: 90%;
-            text-align: center;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            background: white; padding: 25px; border-radius: 16px;
+            max-width: 320px; width: 90%; text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3); animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-
-        @keyframes popIn {
-            from {
-                transform: scale(0.8);
-                opacity: 0;
-            }
-
-            to {
-                transform: scale(1);
-                opacity: 1;
-            }
-        }
-
-        .modal-box h3 {
-            color: #2c3e50;
-            margin-bottom: 10px;
-        }
-
-        .modal-box p {
-            color: #555;
-            font-size: 0.95rem;
-            margin-bottom: 20px;
-            line-height: 1.4;
-        }
-
-        .modal-actions {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-        }
-
-        .modal-actions .btn {
-            padding: 8px 20px;
-            flex: 1;
-        }
+        @keyframes popIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        .modal-box h3 { color: #2c3e50; margin-bottom: 10px; }
+        .modal-box p { color: #555; font-size: 0.95rem; margin-bottom: 20px; line-height: 1.4; }
+        .modal-actions { display: flex; justify-content: center; gap: 10px; }
+        .modal-actions .btn { padding: 8px 20px; flex: 1; }
 
         /* =========================================
            ENTRY / LOGIN STYLES
            ========================================= */
         .entry-card {
-            background: white;
-            padding: 40px;
-            border-radius: 16px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-            text-align: center;
-            width: 100%;
-            max-width: 400px;
+            background: white; padding: 40px; border-radius: 16px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2); text-align: center; width: 100%; max-width: 400px;
         }
-
-        .entry-card h2 {
-            margin-bottom: 20px;
-            color: #333;
-        }
-
+        .entry-card h2 { margin-bottom: 20px; color: #333; }
         .entry-input {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid #e9ecef;
-            border-radius: 8px;
-            font-size: 1rem;
-            margin-bottom: 15px;
-            text-align: center;
+            width: 100%; padding: 12px; border: 2px solid #e9ecef; border-radius: 8px;
+            font-size: 1rem; margin-bottom: 15px; text-align: center;
         }
-
-        .entry-input:focus {
-            border-color: #4facfe;
-            outline: none;
-        }
-
-        .entry-input.uppercase {
-            text-transform: uppercase;
-        }
-
-        .admin-link {
-            display: block;
-            margin-top: 20px;
-            color: #95a5a6;
-            font-size: 0.9rem;
-            cursor: pointer;
-        }
-
-        .admin-link:hover {
-            color: #333;
-            text-decoration: underline;
-        }
-
+        .entry-input:focus { border-color: #4facfe; outline: none; }
+        .entry-input.uppercase { text-transform: uppercase; }
+        .admin-link { display: block; margin-top: 20px; color: #95a5a6; font-size: 0.9rem; cursor: pointer; }
+        .admin-link:hover { color: #333; text-decoration: underline; }
+        
         .login-footer {
             margin-top: 20px;
             color: rgba(255, 255, 255, 0.9);
             font-size: 0.85rem;
             text-align: center;
-            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+            text-shadow: 0 1px 2px rgba(0,0,0,0.1);
         }
 
         /* =========================================
            CHAT STYLES
            ========================================= */
         .chat-container {
-            width: 100%;
-            max-width: 700px;
-            background: white;
-            border-radius: 16px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-            display: flex;
-            flex-direction: column;
-            height: 90dvh;
-            overflow: hidden;
+            width: 100%; max-width: 700px; background: white; border-radius: 16px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2); display: flex; flex-direction: column;
+            height: 90dvh; overflow: hidden;
         }
-
         .chat-header {
-            padding: 16px 20px;
-            background: #2c3e50;
-            color: white;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
+            padding: 16px 20px; background: #2c3e50; color: white; display: flex; flex-direction: column; gap: 10px;
         }
-
-        .header-top {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            width: 100%;
-        }
-
-        .header-top h1 {
-            font-size: 1.2rem;
-            margin: 0;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .room-badge {
-            background: #e74c3c;
-            padding: 3px 8px;
-            border-radius: 6px;
-            font-size: 0.8rem;
-            letter-spacing: 1px;
-        }
-
-        .header-buttons {
-            display: flex;
-            gap: 8px;
-        }
-
-        .badge-group {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-            width: 100%;
-        }
-
-        .user-badge {
-            background: rgba(255, 255, 255, 0.2);
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-        }
-
-        .score-badge {
-            background: #f1c40f;
-            color: #2c3e50;
-            font-weight: bold;
-        }
-
+        .header-top { display: flex; justify-content: space-between; align-items: center; width: 100%; }
+        .header-top h1 { font-size: 1.2rem; margin:0; display: flex; align-items: center; gap: 8px; }
+        .room-badge { background: #e74c3c; padding: 3px 8px; border-radius: 6px; font-size: 0.8rem; letter-spacing: 1px; }
+        .header-buttons { display: flex; gap: 8px; }
+        
+        .badge-group { display: flex; gap: 10px; align-items: center; width: 100%; }
+        .user-badge { background: rgba(255,255,255,0.2); padding: 5px 12px; border-radius: 20px; font-size: 0.9rem; }
+        .score-badge { background: #f1c40f; color: #2c3e50; font-weight: bold; }
+        
         .messages-area {
-            flex: 1;
-            padding: 20px;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            background: #f0f2f5;
+            flex: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; background: #f0f2f5;
         }
-
-        .message-wrapper {
-            display: flex;
-            flex-direction: column;
-        }
-
+        .message-wrapper { display: flex; flex-direction: column; }
         .message {
-            max-width: 75%;
-            padding: 10px 14px;
-            border-radius: 16px;
-            font-size: 0.95rem;
-            line-height: 1.4;
-            animation: fadeIn 0.3s ease;
-            position: relative;
-            transition: margin 0.3s ease;
+            max-width: 75%; padding: 10px 14px; border-radius: 16px; font-size: 0.95rem; line-height: 1.4;
+            animation: fadeIn 0.3s ease; position: relative; transition: margin 0.3s ease;
         }
-
-        .message.own {
-            align-self: flex-end;
-            background: #4facfe;
-            color: white;
-            border-bottom-right-radius: 4px;
-        }
-
-        .message.other {
-            align-self: flex-start;
-            background: #ffffff;
-            color: #333;
-            border-bottom-left-radius: 4px;
-            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-        }
-
-        .message.admin-msg {
-            background: #ffd700;
-            color: #000;
-            font-weight: 500;
-            border: 2px solid #f39c12;
-        }
-
-        .message .meta {
-            font-size: 0.7rem;
-            opacity: 0.7;
-            margin-top: 4px;
-            display: block;
-        }
-
-        .message .sender-name {
-            font-weight: bold;
-            font-size: 0.85rem;
-            color: #2c3e50;
-            margin-bottom: 3px;
-            display: block;
-        }
-
-        .message.own .sender-name {
-            color: #e0f7fa;
-        }
-
-        .message.has-admin-actions {
-            margin-left: 45px;
-            margin-right: 45px;
-        }
+        .message.own { align-self: flex-end; background: #4facfe; color: white; border-bottom-right-radius: 4px; }
+        .message.other { align-self: flex-start; background: #ffffff; color: #333; border-bottom-left-radius: 4px; box-shadow: 0 1px 2px rgba(0,0,0,0.1); }
+        .message.admin-msg { background: #ffd700; color: #000; font-weight: 500; border: 2px solid #f39c12; }
+        
+        .message .meta { font-size: 0.7rem; opacity: 0.7; margin-top: 4px; display: block; }
+        .message .sender-name { font-weight: bold; font-size: 0.85rem; color: #2c3e50; margin-bottom: 3px; display: block; }
+        .message.own .sender-name { color: #e0f7fa; }
+        .message.has-admin-actions { margin-left: 45px; margin-right: 45px; }
 
         /* Tombol Poin */
-        .give-point-btn,
-        .minus-point-btn {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            border: none;
-            border-radius: 50%;
-            width: 32px;
-            height: 32px;
-            font-size: 0.8rem;
-            font-weight: bold;
-            cursor: pointer;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-            transition: 0.2s;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: white;
+        .give-point-btn, .minus-point-btn {
+            position: absolute; top: 50%; transform: translateY(-50%); border: none; border-radius: 50%;
+            width: 32px; height: 32px; font-size: 0.8rem; font-weight: bold; cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2); transition: 0.2s; display: flex; justify-content: center; align-items: center; color: white;
         }
+        .give-point-btn { right: -40px; background: #2ecc71; }
+        .minus-point-btn { left: -40px; background: #e74c3c; }
+        .give-point-btn:active, .minus-point-btn:active { transform: translateY(-50%) scale(0.9); }
 
-        .give-point-btn {
-            right: -40px;
-            background: #2ecc71;
-        }
-
-        .minus-point-btn {
-            left: -40px;
-            background: #e74c3c;
-        }
-
-        .give-point-btn:active,
-        .minus-point-btn:active {
-            transform: translateY(-50%) scale(0.9);
-        }
-
-        .chat-form {
-            padding: 12px 15px;
-            background: white;
-            border-top: 1px solid #eee;
-            display: flex;
-            gap: 8px;
-        }
-
-        .chat-form input {
-            flex: 1;
-            padding: 12px 16px;
-            border: 2px solid #e9ecef;
-            border-radius: 24px;
-            font-size: 1rem;
-            outline: none;
-            transition: border-color 0.3s;
-        }
-
-        .chat-form input:focus {
-            border-color: #4facfe;
-        }
+        .chat-form { padding: 12px 15px; background: white; border-top: 1px solid #eee; display: flex; gap: 8px; }
+        .chat-form input { flex: 1; padding: 12px 16px; border: 2px solid #e9ecef; border-radius: 24px; font-size: 1rem; outline: none; transition: border-color 0.3s; }
+        .chat-form input:focus { border-color: #4facfe; }
 
         /* =========================================
            ADMIN DASHBOARD STYLES
            ========================================= */
         .dashboard-container {
-            max-width: 650px;
-            width: 100%;
-            background: white;
-            border-radius: 16px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-            padding: 30px;
-            height: 90dvh;
-            display: flex;
-            flex-direction: column;
+            max-width: 650px; width: 100%; background: white; border-radius: 16px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2); padding: 30px; height: 90dvh; display: flex; flex-direction: column;
         }
-
-        .dashboard-container h2 {
-            color: #2c3e50;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-
-        .table-wrapper {
-            flex: 1;
-            overflow-y: auto;
-            margin-bottom: 20px;
-            border: 1px solid #eee;
-            border-radius: 8px;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            text-align: left;
-        }
-
-        th,
-        td {
-            padding: 12px 15px;
-            border-bottom: 1px solid #eee;
-        }
-
-        th {
-            background: #f8f9fa;
-            position: sticky;
-            top: 0;
-        }
-
-        tr:hover {
-            background: #fdfdfd;
-        }
-
-        .action-bars {
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .status-msg {
-            margin-top: 10px;
-            text-align: center;
-            font-weight: bold;
-            font-size: 0.9rem;
-        }
+        .dashboard-container h2 { color: #2c3e50; margin-bottom: 20px; text-align: center; }
+        .table-wrapper { flex:1; overflow-y: auto; margin-bottom: 20px; border: 1px solid #eee; border-radius: 8px; }
+        table { width: 100%; border-collapse: collapse; text-align: left; }
+        th, td { padding: 12px 15px; border-bottom: 1px solid #eee; }
+        th { background: #f8f9fa; position: sticky; top: 0; }
+        tr:hover { background: #fdfdfd; }
+        
+        .action-bars { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+        .status-msg { margin-top: 10px; text-align: center; font-weight: bold; font-size: 0.9rem; }
 
         /* Mobile */
         @media (max-width: 768px) {
-            body {
-                padding: 0;
-                background: #f0f2f5;
-            }
-
-            .view-section {
-                align-items: flex-start;
-                height: 100dvh;
-            }
-
-            .chat-container,
-            .dashboard-container {
-                border-radius: 0;
-                box-shadow: none;
-                max-width: 100%;
-                width: 100vw;
-                height: 100dvh;
-                padding: 20px 15px;
-            }
-
-            .entry-card {
-                margin: 20px;
-                margin-top: 10vh;
-            }
-
-            .chat-header {
-                padding: 12px 15px;
-            }
-
-            .messages-area {
-                padding: 15px 10px;
-            }
-
-            .chat-form {
-                padding-bottom: 20px;
-            }
+            body { padding: 0; background: #f0f2f5; }
+            .view-section { align-items: flex-start; height: 100dvh; }
+            .chat-container, .dashboard-container { border-radius: 0; box-shadow: none; max-width: 100%; width: 100vw; height: 100dvh; padding: 20px 15px; }
+            .entry-card { margin: 20px; margin-top: 10vh; }
+            .chat-header { padding: 12px 15px; }
+            .messages-area { padding: 15px 10px; }
+            .chat-form { padding-bottom: 20px; }
         }
     </style>
 </head>
@@ -534,11 +178,9 @@
         <div class="modal-box">
             <h3 id="tokenModalTitle">⚙️ Pengaturan Token</h3>
             <p id="tokenModalDesc" style="font-size:0.85rem; color:#666; margin-bottom:15px;">
-                Tentukan token kelas. Jika Anda mengubah token, <b>chat di ruang sebelumnya akan terhapus secara
-                    otomatis.</b>
+                Tentukan token kelas. Jika Anda mengubah token, <b>chat di ruang sebelumnya akan terhapus secara otomatis.</b>
             </p>
-            <input type="text" id="newTokenInput" class="entry-input uppercase" placeholder="Contoh: KELAS7A"
-                maxlength="10" autocomplete="off" />
+            <input type="text" id="newTokenInput" class="entry-input uppercase" placeholder="Contoh: KELAS7A" maxlength="10" autocomplete="off" />
             <div id="tokenError" class="status-msg" style="color: #e74c3c; display: none;"></div>
             <div class="modal-actions">
                 <button id="cancelTokenBtn" class="btn btn-secondary">Batal</button>
@@ -552,11 +194,9 @@
         <div class="entry-card">
             <h2>ChatBansei</h2>
             <div id="student-login-area">
-                <input type="text" id="joinToken" class="entry-input uppercase" placeholder="TOKEN" maxlength="10"
-                    autocomplete="off" />
-                <input type="text" id="joinName" class="entry-input" placeholder="Nama Siswa" maxlength="20"
-                    autocomplete="off" />
-
+                <input type="text" id="joinToken" class="entry-input uppercase" placeholder="TOKEN" maxlength="10" autocomplete="off" />
+                <input type="text" id="joinName" class="entry-input" placeholder="Nama Siswa" maxlength="20" autocomplete="off" />
+                
                 <button id="joinBtn" class="btn btn-primary" style="width: 100%;">Gabung Kelas</button>
                 <div id="joinError" class="status-msg" style="color: #e74c3c; display: none;"></div>
                 <span class="admin-link" id="showAdminLoginBtn">Masuk sebagai Guru (Admin)</span>
@@ -566,13 +206,12 @@
             <div id="admin-login-area" class="hidden">
                 <input type="email" id="adminEmail" class="entry-input" placeholder="Email Admin" />
                 <input type="password" id="adminPass" class="entry-input" placeholder="Password" />
-                <button id="adminLoginBtn" class="btn btn-primary" style="width: 100%; margin-bottom: 10px;">Login
-                    Guru</button>
+                <button id="adminLoginBtn" class="btn btn-primary" style="width: 100%; margin-bottom: 10px;">Login Guru</button>
                 <button id="backToStudentBtn" class="btn btn-secondary" style="width: 100%;">Batal</button>
                 <div id="adminError" class="status-msg" style="color: #e74c3c; display: none;"></div>
             </div>
         </div>
-
+        
         <!-- Footer khusus halaman login -->
         <div class="login-footer">
             Development by Andri F. &copy; 2026
@@ -586,12 +225,9 @@
                 <div class="header-top">
                     <h1>💬 <span class="room-badge" id="displayRoomToken">TOKEN</span></h1>
                     <div class="header-buttons">
-                        <button id="adminSettingsBtn" class="btn btn-secondary admin-only-btn hidden"
-                            style="padding: 6px 10px; font-size: 0.8rem; background: #34495e;">⚙️ Token</button>
-                        <button id="goToDashboardBtn" class="btn btn-success hidden"
-                            style="padding: 6px 10px; font-size: 0.8rem;">📊 Klasemen</button>
-                        <button id="studentLogoutBtn" class="btn btn-danger hidden"
-                            style="padding: 6px 10px; font-size: 0.8rem;">Keluar</button>
+                        <button id="adminSettingsBtn" class="btn btn-secondary admin-only-btn hidden" style="padding: 6px 10px; font-size: 0.8rem; background: #34495e;">⚙️ Token</button>
+                        <button id="goToDashboardBtn" class="btn btn-success hidden" style="padding: 6px 10px; font-size: 0.8rem;">📊 Klasemen</button>
+                        <button id="studentLogoutBtn" class="btn btn-danger hidden" style="padding: 6px 10px; font-size: 0.8rem;">Keluar</button>
                     </div>
                 </div>
                 <div class="badge-group">
@@ -613,7 +249,7 @@
     <div id="view-admin" class="view-section hidden">
         <div class="dashboard-container">
             <h2>📊 Peringkat & Nilai</h2>
-
+            
             <div class="table-wrapper">
                 <table id="scoreTable">
                     <thead>
@@ -659,10 +295,14 @@
         const db = getDatabase(app);
         const auth = getAuth(app);
 
-        let currentUserRole = 'student';
+        let currentUserRole = 'student'; 
         let currentUserName = '';
         let currentRoomToken = '';
-        let studentListenerActive = false;
+        let studentListenerActive = false; 
+
+        // Variabel penampung pendengar (listener) agar bisa dimatikan dan mencegah chat ganda
+        let unsubscribeMessages = null;
+        let unsubscribeUsers = null;
 
         // DOM Elements
         const viewEntry = document.getElementById('view-entry');
@@ -671,14 +311,14 @@
 
         const studentLoginArea = document.getElementById('student-login-area');
         const adminLoginArea = document.getElementById('admin-login-area');
-
+        
         const joinToken = document.getElementById('joinToken');
         const joinName = document.getElementById('joinName');
         const joinBtn = document.getElementById('joinBtn');
         const showAdminLoginBtn = document.getElementById('showAdminLoginBtn');
         const backToStudentBtn = document.getElementById('backToStudentBtn');
         const joinError = document.getElementById('joinError');
-
+        
         const adminEmail = document.getElementById('adminEmail');
         const adminPass = document.getElementById('adminPass');
         const adminLoginBtn = document.getElementById('adminLoginBtn');
@@ -686,12 +326,12 @@
 
         const displayUsername = document.getElementById('displayUsername');
         const displayRoomToken = document.getElementById('displayRoomToken');
-        const displayScore = document.getElementById('displayScore');
-
-        const adminSettingsBtn = document.getElementById('adminSettingsBtn');
+        const displayScore = document.getElementById('displayScore'); 
+        
+        const adminSettingsBtn = document.getElementById('adminSettingsBtn'); 
         const goToDashboardBtn = document.getElementById('goToDashboardBtn');
         const studentLogoutBtn = document.getElementById('studentLogoutBtn');
-
+        
         const messagesContainer = document.getElementById('messages');
         const chatForm = document.getElementById('chat-form');
         const messageInput = document.getElementById('message-input');
@@ -721,7 +361,7 @@
             modalTitle.textContent = title;
             modalText.innerHTML = text;
             modal.classList.remove('hidden');
-
+            
             modalConfirmBtn.onclick = () => {
                 modal.classList.add('hidden');
                 confirmCallback();
@@ -767,7 +407,7 @@
                 localStorage.setItem('labRoomToken', newToken);
                 currentRoomToken = newToken;
                 tokenModal.classList.add('hidden');
-
+                
                 location.reload();
             } catch (error) {
                 console.error(error);
@@ -780,11 +420,11 @@
         // --- AUTH & SESSION LOGIC ---
         const savedName = localStorage.getItem('labUserName');
         const savedToken = localStorage.getItem('labRoomToken');
-
+        
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 if (user.isAnonymous) {
-                    if (savedName && savedName !== '👑 Guru' && savedToken) {
+                    if(savedName && savedName !== '👑 Guru' && savedToken) {
                         currentUserRole = 'student';
                         currentUserName = savedName;
                         currentRoomToken = savedToken;
@@ -793,17 +433,17 @@
                 } else {
                     currentUserRole = 'admin';
                     currentUserName = '👑 Guru';
-
-                    if (savedToken) {
+                    
+                    if(savedToken) {
                         currentRoomToken = savedToken;
                         showChatRoom();
                     } else {
                         currentRoomToken = '';
-                        showAdminDashboard();
+                        showAdminDashboard(); 
                     }
                 }
             } else {
-                if (savedName && savedName !== '👑 Guru' && savedToken) {
+                if(savedName && savedName !== '👑 Guru' && savedToken) {
                     signInAnonymously(auth).catch(e => console.error(e));
                 }
             }
@@ -818,7 +458,7 @@
 
             if (!currentRoomToken) {
                 scoreTableBody.innerHTML = '<tr><td colspan="3" style="text-align:center; padding: 25px;"><b>Belum ada Ruangan Aktif.</b><br>Silakan klik <b>"⚙️ Atur Token"</b> di bawah untuk membuat ruangan.</td></tr>';
-                goToChatFromAdminBtn.classList.add('hidden');
+                goToChatFromAdminBtn.classList.add('hidden'); 
                 copyScoresBtn.disabled = true;
                 resetClassBtn.disabled = true;
             } else {
@@ -838,46 +478,50 @@
             viewEntry.classList.add('hidden');
             viewAdmin.classList.add('hidden');
             viewChat.classList.remove('hidden');
-
+            
             displayUsername.textContent = currentUserName;
             displayRoomToken.textContent = `RUANG: ${currentRoomToken}`;
-
-            if (window.innerWidth > 768) { messageInput.focus(); }
+            
+            if(window.innerWidth > 768) { messageInput.focus(); }
             goToDashboardBtn.classList.remove('hidden');
 
             setupRoomListeners();
 
-            if (currentUserRole === 'admin') {
+            if(currentUserRole === 'admin') {
                 goToDashboardBtn.textContent = '📊 Panel Nilai';
                 studentLogoutBtn.classList.add('hidden');
-                displayScore.classList.add('hidden');
+                displayScore.classList.add('hidden'); 
                 document.querySelectorAll('.admin-only-btn').forEach(btn => btn.classList.remove('hidden'));
-
+                
                 adminSettingsBtn.classList.remove('hidden');
                 adminSettingsBtn.onclick = () => openTokenModal();
 
             } else {
                 goToDashboardBtn.textContent = '📊 Klasemen';
                 studentLogoutBtn.classList.remove('hidden');
-                displayScore.classList.remove('hidden');
+                displayScore.classList.remove('hidden'); 
                 document.querySelectorAll('.admin-only-btn').forEach(btn => btn.classList.add('hidden'));
                 adminSettingsBtn.classList.add('hidden');
             }
         }
 
         function setupRoomListeners() {
-            messagesContainer.innerHTML = '';
+            // BERSIHKAN LISTENER LAMA JIKA ADA (Mencegah Bug Chat Ganda)
+            if (unsubscribeMessages) { unsubscribeMessages(); unsubscribeMessages = null; }
+            if (unsubscribeUsers) { unsubscribeUsers(); unsubscribeUsers = null; }
 
+            messagesContainer.innerHTML = '';
+            
             const messagesRef = ref(db, `rooms/${currentRoomToken}/messages`);
-            onChildAdded(messagesRef, (snapshot) => renderMessage(snapshot.val()));
+            unsubscribeMessages = onChildAdded(messagesRef, (snapshot) => renderMessage(snapshot.val()));
 
             const usersRef = ref(db, `rooms/${currentRoomToken}/users`);
-            onValue(usersRef, (snapshot) => {
+            unsubscribeUsers = onValue(usersRef, (snapshot) => {
                 let studentData = [];
                 scoreTableBody.innerHTML = '';
-
-                if (!snapshot.exists()) {
-                    if (currentUserRole === 'student' && studentListenerActive) {
+                
+                if(!snapshot.exists()) {
+                    if(currentUserRole === 'student' && studentListenerActive) {
                         alert("Sesi kelas telah diakhiri oleh Guru.");
                         forceLogout();
                     }
@@ -885,7 +529,7 @@
                 }
 
                 snapshot.forEach(child => {
-                    if (child.key === 'ADMIN_STATE') return;
+                    if (child.key === 'ADMIN_STATE') return; 
                     studentData.push({ name: child.key, score: child.val().score || 0 });
                 });
 
@@ -906,7 +550,7 @@
                         displayScore.textContent = `⭐ ${myData.score || 0} Poin`;
                     }
                 }
-                studentListenerActive = true;
+                studentListenerActive = true; 
             });
         }
 
@@ -919,7 +563,7 @@
 
         studentLogoutBtn.onclick = () => {
             showConfirmDialog(
-                "Keluar dari Ruangan",
+                "Keluar dari Ruangan", 
                 "Anda yakin ingin keluar? <br><small><i>(Anda bisa masuk lagi dengan Nama & Kode yang sama)</i></small>",
                 async () => { await forceLogout(); }
             );
@@ -927,7 +571,7 @@
 
         adminLogoutBtn.onclick = () => {
             showConfirmDialog(
-                "Logout Guru",
+                "Logout Guru", 
                 "Anda yakin ingin keluar dari akun Guru? <br><small><i>(Data kelas tidak akan terhapus)</i></small>",
                 async () => { await forceLogout(); }
             );
@@ -947,9 +591,9 @@
         joinBtn.onclick = async () => {
             const token = joinToken.value.trim().toUpperCase();
             const name = joinName.value.trim();
-
-            if (!token || !name) { showMsg(joinError, "Kode dan Nama harus diisi!"); return; }
-            if (name.toLowerCase() === 'guru' || name.toLowerCase() === 'admin') { showMsg(joinError, "Nama tidak diizinkan!"); return; }
+            
+            if(!token || !name) { showMsg(joinError, "Kode dan Nama harus diisi!"); return; }
+            if(name.toLowerCase() === 'guru' || name.toLowerCase() === 'admin') { showMsg(joinError, "Nama tidak diizinkan!"); return; }
 
             joinBtn.disabled = true;
             joinBtn.textContent = "Mengecek...";
@@ -969,14 +613,14 @@
 
                 const userRef = ref(db, `rooms/${token}/users/${name}`);
                 const userSnap = await get(userRef);
-
-                if (!userSnap.exists()) {
+                
+                if(!userSnap.exists()) {
                     await set(userRef, { score: 0, joinedAt: Date.now() });
-                }
+                } 
 
                 localStorage.setItem('labRoomToken', token);
                 localStorage.setItem('labUserName', name);
-
+                
                 currentUserRole = 'student';
                 currentUserName = name;
                 currentRoomToken = token;
@@ -984,7 +628,7 @@
 
             } catch (error) {
                 console.error(error);
-                if (error.message.includes('permission_denied')) {
+                if(error.message.includes('permission_denied')) {
                     showMsg(joinError, "Gagal masuk: Aturan Database (Rules) Firebase memblokir.");
                 } else {
                     showMsg(joinError, "Gagal: " + error.message);
@@ -998,15 +642,15 @@
         adminLoginBtn.onclick = async () => {
             const email = adminEmail.value.trim();
             const pass = adminPass.value;
-
-            if (!email || !pass) { showMsg(adminError, "Email dan Password wajib diisi!"); return; }
-
+            
+            if(!email || !pass) { showMsg(adminError, "Email dan Password wajib diisi!"); return; }
+            
             adminLoginBtn.disabled = true;
             adminLoginBtn.textContent = "Login...";
             try {
                 await signInWithEmailAndPassword(auth, email, pass);
                 localStorage.setItem('labUserName', '👑 Guru');
-            } catch (error) {
+            } catch(error) {
                 showMsg(adminError, "Login Gagal: " + error.message);
                 adminLoginBtn.disabled = false;
                 adminLoginBtn.textContent = "Login Guru";
@@ -1035,7 +679,7 @@
                     isAdmin: currentUserRole === 'admin'
                 });
                 messageInput.value = '';
-                if (window.innerWidth > 768) { messageInput.focus(); }
+                if(window.innerWidth > 768) { messageInput.focus(); }
             } catch (error) {
                 alert('Gagal mengirim pesan: ' + error.message);
             }
@@ -1043,15 +687,15 @@
 
         function renderMessage(data) {
             const isOwn = data.username === currentUserName;
-
+            
             const messageWrapper = document.createElement('div');
             messageWrapper.className = 'message-wrapper';
             messageWrapper.style.alignItems = isOwn ? 'flex-end' : 'flex-start';
 
             const messageEl = document.createElement('div');
             messageEl.classList.add('message', isOwn ? 'own' : 'other');
-
-            if (data.isAdmin) {
+            
+            if(data.isAdmin) {
                 messageEl.classList.add('admin-msg');
                 document.querySelectorAll('.has-admin-actions').forEach(el => {
                     el.classList.remove('has-admin-actions');
@@ -1082,7 +726,7 @@
                         const snap = await get(scoreRef);
                         await set(scoreRef, (snap.exists() ? snap.val() : 0) + 1);
                         setTimeout(() => { plusBtn.innerText = "+1"; plusBtn.style.background = "#2ecc71"; plusBtn.disabled = false; }, 1000);
-                    } catch (e) { }
+                    } catch(e) {}
                 };
 
                 // Tombol -1
@@ -1096,7 +740,7 @@
                         const snap = await get(scoreRef);
                         await set(scoreRef, (snap.exists() ? snap.val() : 0) - 1);
                         setTimeout(() => { minusBtn.innerText = "-1"; minusBtn.style.background = "#e74c3c"; minusBtn.disabled = false; }, 1000);
-                    } catch (e) { }
+                    } catch(e) {}
                 };
 
                 messageEl.appendChild(plusBtn);
@@ -1109,23 +753,23 @@
         }
 
         // --- DASHBOARD NAVIGATION ---
-        goToDashboardBtn.onclick = () => {
-            if (currentUserRole === 'admin') {
+        goToDashboardBtn.onclick = () => { 
+            if(currentUserRole === 'admin') {
                 showAdminDashboard();
             } else {
-                viewChat.classList.add('hidden'); viewAdmin.classList.remove('hidden');
+                viewChat.classList.add('hidden'); viewAdmin.classList.remove('hidden'); 
             }
         };
         goToChatFromAdminBtn.onclick = () => { viewAdmin.classList.add('hidden'); viewChat.classList.remove('hidden'); };
 
         copyScoresBtn.onclick = () => {
-            if (scoreTableBody.children.length === 0) { showMsg(adminStatus, "Belum ada siswa yang bergabung."); return; }
-
+            if(scoreTableBody.children.length === 0) { showMsg(adminStatus, "Belum ada siswa yang bergabung."); return; }
+            
             let textToCopy = "Peringkat\tNama Siswa\tTotal Poin\n";
             const rows = scoreTableBody.querySelectorAll('tr');
             rows.forEach(row => {
                 const cols = row.querySelectorAll('td');
-                textToCopy += `${cols[0].innerText}\t${cols[1].innerText}\t${cols[2].innerText.replace(' Poin', '')}\n`;
+                textToCopy += `${cols[0].innerText}\t${cols[1].innerText}\t${cols[2].innerText.replace(' Poin','')}\n`;
             });
 
             const textarea = document.createElement('textarea'); textarea.value = textToCopy;
@@ -1135,7 +779,7 @@
 
         resetClassBtn.onclick = () => {
             showConfirmDialog(
-                "Hapus Kelas?",
+                "Hapus Kelas?", 
                 `<strong>⚠️ PERHATIAN!</strong><br><br>Seluruh Chat dan Nilai siswa di Ruang <b>${currentRoomToken}</b> akan dihapus permanen.<br><br>Apakah Anda sudah menyalin nilai?`,
                 async () => {
                     resetClassBtn.disabled = true;
@@ -1143,11 +787,11 @@
                     try {
                         await remove(ref(db, `rooms/${currentRoomToken}/messages`));
                         await remove(ref(db, `rooms/${currentRoomToken}/users`));
-
+                        
                         localStorage.removeItem('labRoomToken');
-                        messagesContainer.innerHTML = '';
+                        messagesContainer.innerHTML = ''; 
                         showMsg(adminStatus, "✅ Kelas berhasil dihapus!");
-
+                        
                         setTimeout(() => location.reload(), 1500);
                     } catch (error) {
                         showMsg(adminStatus, "❌ Gagal mereset: " + error.message);
@@ -1163,5 +807,4 @@
         }
     </script>
 </body>
-
 </html>
